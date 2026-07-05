@@ -13,5 +13,5 @@ app.use(cookieParser());
 app.use(express.json);
 
 app.listen(PORT, () => {
-  console.log(`server running on http://localhost${PORT}`);
+  console.log(`server running on http://localhost:${PORT}`);
 });
