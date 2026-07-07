@@ -22,8 +22,8 @@ async function get(path: string) {
     throw new Error(
       (await res.json().catch(() => ({}))).error || "Request failed",
     );
-    return res.json();
   }
+  return res.json();
 }
 
 export const api = {

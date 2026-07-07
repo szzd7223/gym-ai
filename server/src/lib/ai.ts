@@ -37,7 +37,7 @@ export async function generateTrainingPlan(
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "tencent/hy3:free",
+      model: "google/gemini-2.5-flash-lite",
       messages: [
         {
           role: "system",
