@@ -63,3 +63,35 @@ planRouter.post("/generate", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to generate plan" });
   }
 });
+
+planRouter.get("/current", async (req: Request, res: Response) => {
+  try {
+    const userId = req.query.userId as string;
+    if (!userId) {
+      return res.status(400).json({
+        error: "User ID is required",
+      });
+    }
+
+    const plan = await prisma.training_plans.findFirst({
+      where: { user_id: userId },
+      orderBy: { created_at: "desc" },
+    });
+
+    if (!plan) {
+      return res.status(404).json({ error: "No plan found" });
+    }
+
+    res.json({
+      id: plan.id,
+      userId: plan.user_id,
+      planJson: plan.plan_json,
+      planText: plan.plan_text,
+      version: plan.version,
+      createdAt: plan.created_at,
+    });
+  } catch (err) {
+    console.error("Error fetching plan: ", err);
+    res.status(500).json({ error: "Failed to fetch plan" });
+  }
+});
